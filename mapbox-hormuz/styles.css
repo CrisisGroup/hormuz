@@ -1,0 +1,83 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: #142326;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+button {
+    font: inherit;
+}
+
+#map {
+    position: absolute;
+    inset: 0;
+}
+
+.map-ui {
+    position: absolute;
+    z-index: 2;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.35rem;
+    border: 1px solid rgb(255 255 255 / 0.22);
+    background: rgb(20 35 38 / 0.86);
+}
+
+.map-ui__button {
+    min-width: 5.5rem;
+    border: 1px solid rgb(255 255 255 / 0.28);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    padding: 0.7rem 0.85rem;
+    text-transform: uppercase;
+}
+
+.map-ui__button:hover,
+.map-ui__button:focus-visible {
+    border-color: #fff;
+    outline: none;
+}
+
+.map-ui__button.is-active {
+    background: #bf9788;
+    border-color: #bf9788;
+    color: #142326;
+}
+
+.map-status {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.mapboxgl-ctrl-bottom-left,
+.mapboxgl-ctrl-bottom-right {
+    z-index: 2;
+}
+
+@media (max-width: 600px) {
+    .map-ui {
+        right: 1rem;
+    }
+
+    .map-ui__button {
+        flex: 1;
+        min-width: 0;
+    }
+}

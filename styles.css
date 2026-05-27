@@ -44,13 +44,9 @@ h6 {
 
 h2 {
   color: #000;
-  letter-spacing: 0.15rem;
-  font-size: 1.3rem;
-  margin-top: 3rem;
-}
-
-h3 {
   letter-spacing: 0.05rem;
+  font-size: 1.3rem;
+  margin: 3rem 0 1rem;
 }
 
 p {
@@ -88,25 +84,7 @@ figure {
   margin-inline-end: 0;
 }
 
-.span-box-green,
-.span-box-rose {
-  padding: 0.08em 0.28em;
-  border: 1px solid;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-
-.span-box-green {
-  border-color: #58997A;
-  background: rgb(88 153 122 / 0.25);
-}
-
-.span-box-rose {
-  border-color: #7A5457;
-  background: rgb(122 84 87 / 0.25);
-}
-
-/* ---------- Hero (short editorial video header) ---------- */
+/* ---------- Hero ---------- */
 
 .hero {
   width: 100%;
@@ -148,39 +126,6 @@ figure {
 @media (max-width: 425px) {
   .hero__image-wrap {
     aspect-ratio: 16 / 9;
-  }
-}
-
-.hero__video-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 21 / 9;
-}
-
-.hero__video {
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  min-width: 90%;
-  min-height: 90%;
-  width: 90%;
-  height: 90%;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  padding: 10px;
-}
-
-@media (max-width: 425px) {
-  .hero__video {
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-    padding: 0;
   }
 }
 
@@ -243,7 +188,7 @@ figure {
   letter-spacing: 0.05rem;
 }
 
-/* ---------- Hero Intro Dropcap Graf ---------- */
+/* ---------- Hero Intro ---------- */
 
 .hero__intro-wrap {
   text-align: center;
@@ -263,42 +208,6 @@ figure {
   .hero__intro {
     padding: 0 1.5rem;
   }
-}
-
-/* 
-.hero__intro::first-line {
-  font-family: "franklin-gothic-urw-cond", sans-serif;
-  letter-spacing: 0.045em;
-  color: #bd4f34;
-  text-transform: uppercase;
-  font-weight: bold;
-} */
-
-.hero__intro2 {
-  position: relative;
-  display: inline-block;
-  margin-top: 2.25rem;
-  font-size: 1.2rem;
-  line-height: 1.7;
-  max-width: 42rem;
-  text-align: left;
-}
-
-@media (max-width: 425px) {
-  .hero__intro2 {
-    padding: 0 1.5rem;
-  }
-}
-
-.dropcap {
-  font-family: "franklin-gothic-urw-cond", sans-serif;
-  font-size: 4.8rem;
-  line-height: 0.85;
-  font-weight: 600;
-  pointer-events: none;
-  color: #000;
-  float: left;
-  margin-right: 12px;
 }
 
 /* ---------- Copy section that follows the map ---------- */
@@ -339,10 +248,6 @@ figure {
 
 .media-breakout.media-block {
   margin: var(--media-block-top) 0 var(--media-block-bottom);
-}
-
-.media-breakout-maps {
-  margin: 3rem 0 3rem 0;
 }
 
 /* .media-breakout--column {
@@ -403,6 +308,20 @@ figure {
 .wide-media video,
 .wide-media img {
   border-radius: 0;
+}
+
+.wide-media--mapbox {
+  width: min(1100px, calc(100vw - 3rem));
+  max-width: 1100px;
+}
+
+.mapbox-embed {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 520px;
+  border: 0;
+  background: #142326;
 }
 
 .wide-media--scroll-swap {
@@ -478,6 +397,11 @@ figure {
   .wide-media--urban-breakout {
     width: min(1100px, calc(100vw - 3rem));
     max-width: 1100px;
+  }
+
+  .mapbox-embed {
+    aspect-ratio: 4 / 5;
+    min-height: 560px;
   }
 
   .wide-media--scroll-swap-abandoned,
@@ -591,7 +515,7 @@ figure {
   padding: 0.35rem 0.55rem;
   border: 1px solid rgba(245, 245, 245, 0.45);
   background: rgba(20, 35, 38, 0.82);
-  color: var(--fg);
+  color: #fff;
   font-family: "franklin-gothic-urw-cond", sans-serif;
   font-size: 1.4rem;
   font-weight: bold;
