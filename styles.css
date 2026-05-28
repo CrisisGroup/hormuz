@@ -57,6 +57,36 @@ p {
   margin-top: 8px;
 }
 
+.chapter-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  font-family: pt-serif, serif;
+  font-size: 1.3rem;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.chapter-list li {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.chapter-list li::before {
+  content: "";
+  position: absolute;
+  top: 0.72em;
+  left: 0;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.chapter-list li + li {
+  margin-top: 0.75rem;
+}
+
 a {
   color: #000;
   text-decoration-line: underline;
@@ -73,6 +103,27 @@ hr {
 
 a:hover {
   color: #BF9788;
+}
+
+.span-highlight-black {
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  padding: 0.04em 0.2em;
+}
+
+.span-highlight-teal {
+  background: #50b4ad;
+  color: #000;
+  font-weight: 700;
+  padding: 0.04em 0.2em;
+}
+
+.span-highlight-tan {
+  background: #bf9775;
+  color: #000;
+  font-weight: 700;
+  padding: 0.04em 0.2em;
 }
 
 figure {
@@ -250,6 +301,12 @@ figure {
   margin: var(--media-block-top) 0 var(--media-block-bottom);
 }
 
+.chapter-copy > .media-breakout.media-block > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /* .media-breakout--column {
   width: calc(100% + 3rem);
   margin-left: -1.5rem;
@@ -331,6 +388,7 @@ figure {
   margin-top: 0;
 }
 
+.wide-media--scroll-swap-intro,
 .wide-media--scroll-swap-abandoned,
 .wide-media--scroll-swap-fort {
   aspect-ratio: 1 / 1;
@@ -356,6 +414,10 @@ figure {
 
 .scroll-swap__track--three {
   height: 170vh;
+}
+
+.scroll-swap__track--four {
+  height: 230vh;
 }
 
 .scroll-swap__image {
@@ -420,6 +482,10 @@ figure {
 
   .scroll-swap__track--three {
     height: 150vh;
+  }
+
+  .scroll-swap__track--four {
+    height: 200vh;
   }
 }
 
