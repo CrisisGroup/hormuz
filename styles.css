@@ -212,7 +212,7 @@ figure {
 
 .hero h1 {
   font-size: clamp(2.5rem, 8vw, 5rem);
-  margin: 0 3vw;
+  margin: 0 7vw;
   max-width: 34ch;
   color: #000;
   text-transform: none !important;
