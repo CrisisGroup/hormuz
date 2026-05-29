@@ -292,6 +292,10 @@ figure {
   padding: 0 var(--chapter-copy-space-inline) var(--chapter-copy-space-bottom);
 }
 
+.chapter-copy--flush-bottom {
+  padding-bottom: 0;
+}
+
 .chapter-copy > :last-child {
   margin-bottom: 0;
 }

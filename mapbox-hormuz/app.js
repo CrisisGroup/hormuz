@@ -416,7 +416,7 @@ function addRouteLayers() {
     type: "circle",
     source: "route-points",
     paint: {
-      "circle-color": "#142326",
+      "circle-color": routeColorExpression(),
       "circle-radius": [
         "case",
         ["==", ["get", "kind"], "chokepoint"],
@@ -424,7 +424,7 @@ function addRouteLayers() {
         5
       ],
       "circle-opacity": 0.88,
-      "circle-stroke-color": routeColorExpression(),
+      "circle-stroke-color": "#142326",
       "circle-stroke-width": 2
     }
   });
