@@ -1,19 +1,17 @@
 mapboxgl.accessToken = "pk.eyJ1IjoiZGFsdG9ud2IiLCJhIjoiOWdSSXFQSSJ9.HZyjh4g3TAAOAncwelv9Vw";
 
-const MAP_STYLE = "mapbox://styles/daltonwb/cmpfjmueo002v01sj5fc3fx3w";
-const ROUTE_DRAW_MS = 1800;
+const MAP_STYLE = "mapbox://styles/daltonwb/cmppy5827006g01qn8ri0chn3";
+const ROUTE_DRAW_MS = 4000;
+const ROUTE_FIT_MS = 1700;
+const MAP_MAX_BOUNDS = [
+  [-18, -18],
+  [150, 72]
+];
 
 const routes = {
   "baltic-india": {
     label: "Baltic Sea to India route",
     color: "#f2c15f",
-    camera: {
-      center: [35.5, 35],
-      zoom: 2.55,
-      bearing: 0,
-      pitch: 18,
-      duration: 1700
-    },
     features: [
       {
         type: "Feature",
@@ -25,42 +23,41 @@ const routes = {
           type: "LineString",
           coordinates: [
             [18.6, 59.3],
-            [12.6, 55.7],
-            [10.8, 57.7],
-            [3.1, 56.0],
-            [1.4, 51.0],
-            [-5.6, 48.0],
-            [-5.35, 36.0],
-            [14.5, 37.5],
-            [30.1, 31.3],
+            [15.1, 55.4],
+            [12.4, 55.9],
+            [11.0, 57.7],
+            [5.1, 56.2],
+            [1.4, 51.7],
+            [-1.2, 50.4],
+            [-5.8, 48.5],
+            [-8.4, 45.2],
+            [-10.2, 41.2],
+            [-9.4, 37.2],
+            [-5.55, 36.05],
+            [11.7, 36.3],
+            [18.8, 34.9],
+            [29.6, 32.2],
             [32.55, 29.95],
-            [36.5, 20.0],
+            [37.8, 20.0],
             [43.3, 12.6],
             [57.0, 15.0],
-            [72.85, 18.95]
+            [72.7, 18.75]
           ]
         }
       }
     ],
     points: [
       ["Baltic Sea", [18.6, 59.3], "origin"],
-      ["Danish straits", [12.2, 56.2], "chokepoint"],
-      ["Gibraltar", [-5.35, 36.0], "chokepoint"],
+      ["Danish straits", [12.4, 55.9], "chokepoint"],
+      ["Gibraltar", [-5.55, 36.05], "chokepoint"],
       ["Suez", [32.55, 29.95], "chokepoint"],
       ["Bab al-Mandeb", [43.3, 12.6], "chokepoint"],
-      ["India", [72.85, 18.95], "destination"]
+      ["India", [72.7, 18.75], "destination"]
     ]
   },
   "gulf-east-asia": {
     label: "Gulf to East Asia route",
     color: "#7cc7d9",
-    camera: {
-      center: [94.5, 18.5],
-      zoom: 2.65,
-      bearing: 0,
-      pitch: 18,
-      duration: 1700
-    },
     features: [
       {
         type: "Feature",
@@ -71,12 +68,13 @@ const routes = {
         geometry: {
           type: "LineString",
           coordinates: [
-            [51.6, 25.3],
-            [56.35, 26.55],
-            [63.0, 22.0],
-            [72.5, 7.0],
-            [83.0, 5.5],
-            [95.0, 5.8],
+            [51.8, 26.05],
+            [56.55, 26.35],
+            [63.5, 22.6],
+            [71.0, 9.0],
+            [82.5, 5.8],
+            [95.7, 5.4],
+            [99.4, 3.8],
             [103.8, 1.3],
             [112.0, 8.5],
             [121.0, 20.5]
@@ -93,9 +91,10 @@ const routes = {
           type: "LineString",
           coordinates: [
             [121.0, 20.5],
-            [128.2, 27.5],
-            [137.0, 34.0],
-            [139.8, 35.4]
+            [124.5, 24.2],
+            [129.0, 28.0],
+            [134.0, 31.5],
+            [139.75, 35.2]
           ]
         }
       },
@@ -109,18 +108,19 @@ const routes = {
           type: "LineString",
           coordinates: [
             [121.0, 20.5],
-            [126.0, 30.2],
-            [129.0, 35.1]
+            [124.5, 25.5],
+            [126.2, 31.5],
+            [128.8, 34.8]
           ]
         }
       }
     ],
     points: [
-      ["Persian Gulf", [51.6, 25.3], "origin"],
-      ["Hormuz", [56.35, 26.55], "chokepoint"],
+      ["Persian Gulf", [51.8, 26.05], "origin"],
+      ["Hormuz", [56.55, 26.35], "chokepoint"],
       ["Malacca", [103.8, 1.3], "chokepoint"],
-      ["South Korea", [129.0, 35.1], "destination"],
-      ["Japan", [139.8, 35.4], "destination"]
+      ["South Korea", [128.8, 34.8], "destination"],
+      ["Japan", [139.75, 35.2], "destination"]
     ]
   }
 };
@@ -135,16 +135,18 @@ const map = new mapboxgl.Map({
   projection: {
     name: "equalEarth"
   },
-  center: [72, 28],
+  center: [84.961294, 20.770614],
   zoom: 2.15,
   bearing: 0,
   pitch: 12,
+  maxBounds: MAP_MAX_BOUNDS,
+  renderWorldCopies: false,
   attributionControl: false,
   cooperativeGestures: true
 });
 
 map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }), "bottom-right");
-map.addControl(new mapboxgl.AttributionControl({ compact: true }), "bottom-left");
+map.addControl(new mapboxgl.AttributionControl({ compact: false }), "bottom-left");
 
 const buttons = Array.from(document.querySelectorAll("[data-map-state]"));
 const status = document.getElementById("map-status");
@@ -173,6 +175,27 @@ function getAllPointFeatures() {
       coordinates
     }
   })));
+}
+
+function routeFitPadding() {
+  const compact = window.innerWidth <= 600;
+
+  return {
+    top: compact ? 112 : 92,
+    right: compact ? 32 : 56,
+    bottom: 56,
+    left: compact ? 32 : 56
+  };
+}
+
+function getRouteBounds(routeId) {
+  const coordinates = routes[routeId].features.flatMap((feature) => feature.geometry.coordinates);
+  if (!coordinates.length) return null;
+
+  return coordinates.slice(1).reduce((bounds, coordinate) => {
+    bounds.extend(coordinate);
+    return bounds;
+  }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
 }
 
 function toRadians(value) {
@@ -451,14 +474,16 @@ function setActiveState(routeId) {
     ]);
   }
 
-  map.flyTo({
-    center: route.camera.center,
-    zoom: route.camera.zoom,
-    bearing: route.camera.bearing,
-    pitch: route.camera.pitch,
-    duration: route.camera.duration,
-    essential: true
-  });
+  const bounds = getRouteBounds(routeId);
+  if (bounds) {
+    map.fitBounds(bounds, {
+      padding: routeFitPadding(),
+      bearing: 0,
+      pitch: 18,
+      duration: ROUTE_FIT_MS,
+      essential: true
+    });
+  }
 
   animateActiveRoute(routeId);
 }

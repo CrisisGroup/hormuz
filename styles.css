@@ -383,7 +383,7 @@ figure {
 
 .wide-media--scroll-swap {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: var(--scroll-swap-aspect-ratio, 1 / 1);
   overflow: hidden;
   margin-top: 0;
 }
@@ -391,9 +391,16 @@ figure {
 .wide-media--scroll-swap-intro,
 .wide-media--scroll-swap-abandoned,
 .wide-media--scroll-swap-fort {
-  aspect-ratio: 1 / 1;
   width: min(1100px, calc(100vw - 3rem));
   max-width: 1100px;
+}
+
+.wide-media--scroll-swap-landscape {
+  --scroll-swap-aspect-ratio: 45 / 32;
+}
+
+.wide-media--scroll-swap-wide {
+  --scroll-swap-aspect-ratio: 2 / 1;
 }
 
 .scroll-swap__stage {
@@ -403,7 +410,7 @@ figure {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--media-block-top, 4rem) var(--media-block-inline, 1.5rem) var(--media-block-bottom, 3rem);
+  padding: 1.5rem var(--media-block-inline, 1.5rem);
   background: var(--bg);
   z-index: 1;
 }
@@ -473,7 +480,7 @@ figure {
   }
 
   .scroll-swap__stage {
-    padding: var(--media-block-top, 3rem) var(--media-block-inline, 1rem) var(--media-block-bottom, 2rem);
+    padding: 1rem var(--media-block-inline, 1rem);
   }
 
   .scroll-swap__track {
