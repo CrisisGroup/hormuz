@@ -108,15 +108,25 @@ a:hover {
 .span-highlight-black {
   background: #000;
   color: #fff;
-  font-weight: 700;
+  font-weight: 500;
+  padding: 0.04em 0.2em;
+  font-family: "franklin-gothic-urw", sans-serif;
+}
+
+.span-highlight-helium {
+  background: #fff;
+  border: solid .5px #000;
+  color: #000;
+  font-weight: 500;
   padding: 0.04em 0.2em;
   font-family: "franklin-gothic-urw", sans-serif;
 }
 
 .span-highlight-teal {
-  background: #50b4ad;
+  background: #92bfba;
+  border: solid .5px #50b4ad;
   color: #000;
-  font-weight: 700;
+  font-weight: 500;
   padding: 0.04em 0.2em;
   font-family: "franklin-gothic-urw", sans-serif;
 }
@@ -125,7 +135,7 @@ a:hover {
   background: #d9c1ad;
   border: solid .5px #bf9775;
   color: #000;
-  font-weight: 700;
+  font-weight: 500;
   padding: 0.04em 0.2em;
   font-family: "franklin-gothic-urw", sans-serif;
 }
@@ -252,11 +262,14 @@ figure {
 .hero__intro {
   position: relative;
   display: inline-block;
-  margin-top: 2.25rem;
   font-size: 1.3rem;
   line-height: 1.7;
   max-width: 42rem;
   text-align: left;
+}
+
+.hero__intro:first-child {
+  margin-top: 2.25rem;
 }
 
 @media (max-width: 425px) {
@@ -349,9 +362,11 @@ figure {
 .chapter-copy--scroll-swap-contained .scroll-swap__stage {
   position: sticky;
   top: 0;
+  --scroll-swap-copy-gap: 2rem;
+  --scroll-swap-copy-heading-gap: 0.75rem;
   min-height: 100vh;
   flex-direction: column;
-  gap: clamp(0.75rem, 2vh, 1.25rem);
+  gap: 0;
   padding-block: 1rem;
 }
 
@@ -361,10 +376,11 @@ figure {
 
 .scroll-swap__copy {
   width: min(720px, calc(100vw - 3rem));
+  margin-top: var(--scroll-swap-copy-gap, 1.25rem);
 }
 
 .scroll-swap__copy h2 {
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--scroll-swap-copy-heading-gap, 0.5rem);
 }
 
 .scroll-swap__copy p {
@@ -378,6 +394,7 @@ figure {
   text-align: left;
   font-family: "franklin-gothic-urw", sans-serif;
   line-height: 1.4;
+  font-weight: 300;
 }
 
 /* ---------- Wide media ---------- */
