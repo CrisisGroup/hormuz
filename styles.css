@@ -352,6 +352,14 @@ figure {
   width: var(--scroll-swap-contained-size);
 }
 
+.chapter-copy--scroll-swap-wide-media .media-breakout--scroll-swap {
+  --scroll-swap-contained-size: min(960px, calc(100vw - 3rem));
+}
+
+.chapter-copy--scroll-swap-xl-media .media-breakout--scroll-swap {
+  --scroll-swap-contained-size: min(1400px, calc(100vw - 2rem));
+}
+
 .chapter-copy--scroll-swap-contained .wide-media--scroll-swap {
   left: auto;
   transform: none;
@@ -361,21 +369,29 @@ figure {
 
 .chapter-copy--scroll-swap-contained .scroll-swap__stage {
   position: sticky;
-  top: 0;
+  top: var(--scroll-swap-lock-offset, 4vh);
   --scroll-swap-copy-gap: 2rem;
   --scroll-swap-copy-heading-gap: 0.75rem;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--scroll-swap-lock-offset, 4vh));
   flex-direction: column;
   gap: 0;
   padding-block: 1rem;
 }
 
+.chapter-copy--scroll-swap-contained .scroll-swap__track {
+  height: 105vh;
+}
+
 .chapter-copy--scroll-swap-contained .scroll-swap__track--three {
-  height: 115vh;
+  height: 135vh;
+}
+
+.chapter-copy--scroll-swap-contained .scroll-swap__track--four {
+  height: 165vh;
 }
 
 .scroll-swap__copy {
-  width: min(720px, calc(100vw - 3rem));
+  width: min(calc(720px - (2 * var(--chapter-copy-space-inline))), calc(100vw - (2 * var(--chapter-copy-space-inline))));
   margin-top: var(--scroll-swap-copy-gap, 1.25rem);
 }
 
@@ -383,8 +399,8 @@ figure {
   margin: 0 0 var(--scroll-swap-copy-heading-gap, 0.5rem);
 }
 
-.scroll-swap__copy p {
-  margin: 0.45rem 0 0;
+.chapter-copy--scroll-swap-xl-media + .chapter-copy > p:first-of-type {
+  display: none;
 }
 
 .media-breakout figcaption {
