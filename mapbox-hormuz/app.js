@@ -316,6 +316,17 @@ function routeColorExpression() {
   ];
 }
 
+function routePointLabelOpacityExpression() {
+  if (!activeRoute) return 0;
+
+  return [
+    "case",
+    ["==", ["get", "route"], activeRoute],
+    1,
+    0.38
+  ];
+}
+
 function addRouteLayers() {
   map.addSource("shipping-routes", {
     type: "geojson",
@@ -440,12 +451,7 @@ function addRouteLayers() {
       "text-color": "#000000",
       "text-halo-color": "#ffffff",
       "text-halo-width": 0.8,
-      "text-opacity": [
-        "case",
-        ["==", ["get", "route"], activeRoute],
-        1,
-        0.38
-      ]
+      "text-opacity": routePointLabelOpacityExpression()
     }
   });
 }
@@ -503,12 +509,7 @@ function setActiveState(routeId) {
   }
 
   if (map.getLayer("route-point-labels")) {
-    map.setPaintProperty("route-point-labels", "text-opacity", [
-      "case",
-      ["==", ["get", "route"], activeRoute],
-      1,
-      0.38
-    ]);
+    map.setPaintProperty("route-point-labels", "text-opacity", routePointLabelOpacityExpression());
   }
 
   const bounds = getRouteBounds(routeId);

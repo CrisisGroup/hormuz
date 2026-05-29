@@ -41,6 +41,7 @@ button {
     background: var(--route-button-color);
     color: #142326;
     cursor: pointer;
+    font-family: "franklin-gothic-urw", Arial, sans-serif;
     font-size: 0.9rem;
     font-weight: 700;
     letter-spacing: 0.06em;
