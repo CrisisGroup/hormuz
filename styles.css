@@ -39,7 +39,7 @@ h5,
 h6 {
   font-family: "franklin-gothic-urw-cond", sans-serif;
   font-weight: 600;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 h2 {
