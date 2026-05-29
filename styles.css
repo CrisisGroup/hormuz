@@ -409,7 +409,7 @@ figure {
 }
 
 .chapter-copy--scroll-swap-tss .scroll-swap__track--five {
-  height: 460vh;
+  height: 600vh;
 }
 
 .chapter-copy--scroll-swap-fast {
@@ -520,7 +520,7 @@ figure {
 }
 
 .wide-media--scroll-swap-tss {
-  --scroll-swap-image-offset-y: -10%;
+  --scroll-swap-image-offset-y: -12%;
 }
 
 .scroll-swap__stage {
