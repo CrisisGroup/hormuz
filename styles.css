@@ -370,7 +370,7 @@ figure {
 .chapter-copy--scroll-swap-contained .scroll-swap__stage {
   position: sticky;
   top: var(--scroll-swap-lock-offset, 4vh);
-  --scroll-swap-copy-gap: 2rem;
+  --scroll-swap-copy-gap: 1rem;
   --scroll-swap-copy-heading-gap: 0.75rem;
   min-height: calc(100vh - var(--scroll-swap-lock-offset, 4vh));
   flex-direction: column;
@@ -380,6 +380,10 @@ figure {
 
 .chapter-copy--scroll-swap-contained .scroll-swap__track {
   height: 105vh;
+}
+
+.chapter-copy--scroll-swap-xl-media .scroll-swap__track {
+  height: 240vh;
 }
 
 .chapter-copy--scroll-swap-contained .scroll-swap__track--three {
@@ -396,7 +400,15 @@ figure {
 }
 
 .scroll-swap__copy h2 {
-  margin: 0 0 var(--scroll-swap-copy-heading-gap, 0.5rem);
+  margin: 0;
+}
+
+.scroll-swap__copy > :first-child {
+  margin-top: 0;
+}
+
+.scroll-swap__copy p:last-of-type {
+  margin-bottom: 0;
 }
 
 .chapter-copy--scroll-swap-xl-media + .chapter-copy > p:first-of-type {

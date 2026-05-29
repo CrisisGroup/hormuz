@@ -127,7 +127,7 @@
   let ticking = false;
 
   function updateSwaps() {
-    const triggerLine = window.innerHeight * 0.58;
+    const triggerLine = window.innerHeight * 0.68;
 
     swaps.forEach((swap) => {
       const track = getSwapTrack(swap);
