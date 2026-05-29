@@ -3,6 +3,8 @@
   if (!swaps.length) return;
 
   const DEFAULT_FADE_DURATION_MS = 360;
+  const DEFAULT_FINAL_HOLD_RATIO = 0.25;
+  const MIN_FINAL_HOLD_SOURCE_COUNT = 3;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const preloadCache = new Set();
 
@@ -33,6 +35,16 @@
     }
 
     return DEFAULT_FADE_DURATION_MS;
+  }
+
+  function getFinalHoldRatio(swap, sources) {
+    const requestedHold = Number.parseFloat(swap.dataset.swapFinalHold);
+
+    if (Number.isFinite(requestedHold)) {
+      return Math.min(Math.max(requestedHold, 0), 0.85);
+    }
+
+    return sources.length >= MIN_FINAL_HOLD_SOURCE_COUNT ? DEFAULT_FINAL_HOLD_RATIO : 0;
   }
 
   function getSwapSources(image) {
@@ -163,8 +175,12 @@
       const trackRect = track.getBoundingClientRect();
       const trackHeight = Math.max(trackRect.height, 1);
       const trackProgress = Math.min(Math.max((triggerLine - trackRect.top) / trackHeight, 0), 0.999);
+      const finalHoldRatio = getFinalHoldRatio(swap, sources);
+      const transitionProgress = finalHoldRatio > 0
+        ? Math.min(trackProgress / (1 - finalHoldRatio), 0.999)
+        : trackProgress;
       const nextIndex = trackRect.top <= triggerLine
-        ? Math.min(Math.floor(trackProgress * (sources.length - 1)) + 1, sources.length - 1)
+        ? Math.min(Math.floor(transitionProgress * (sources.length - 1)) + 1, sources.length - 1)
         : 0;
 
       if (Number.parseInt(swap.dataset.swapIndex, 10) !== nextIndex) {
