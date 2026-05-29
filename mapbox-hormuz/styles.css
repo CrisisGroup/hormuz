@@ -28,15 +28,18 @@ button {
     display: flex;
     gap: 0.5rem;
     padding: 0.35rem;
-    border: 1px solid rgb(255 255 255 / 0.22);
-    background: rgb(20 35 38 / 0.86);
+    background: transparent;
 }
 
 .map-ui__button {
+    --route-button-color: #fff;
+    --route-button-active-color: #fff;
+    --route-button-border-color: #142326;
+    --route-button-text-active: #142326;
     min-width: 5.5rem;
-    border: 1px solid rgb(255 255 255 / 0.28);
-    background: transparent;
-    color: #fff;
+    border: 1px solid var(--route-button-border-color);
+    background: var(--route-button-color);
+    color: #142326;
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 700;
@@ -46,16 +49,29 @@ button {
     text-transform: uppercase;
 }
 
+.map-ui__button[data-map-state="baltic-india"] {
+    --route-button-color: #bf9775;
+    --route-button-active-color: #d7b79d;
+    --route-button-border-color: #8f6749;
+}
+
+.map-ui__button[data-map-state="gulf-east-asia"] {
+    --route-button-color: #8dc8c1;
+    --route-button-active-color: #b6dfda;
+    --route-button-border-color: #5f9690;
+}
+
 .map-ui__button:hover,
 .map-ui__button:focus-visible {
-    border-color: #fff;
+    background: var(--route-button-active-color);
+    border-color: var(--route-button-border-color);
     outline: none;
 }
 
 .map-ui__button.is-active {
-    background: #bf9788;
-    border-color: #bf9788;
-    color: #142326;
+    background: var(--route-button-active-color);
+    border-color: var(--route-button-border-color);
+    color: var(--route-button-text-active);
 }
 
 .map-status {

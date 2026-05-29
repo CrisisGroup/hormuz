@@ -3,15 +3,10 @@ mapboxgl.accessToken = "pk.eyJ1IjoiZGFsdG9ud2IiLCJhIjoiOWdSSXFQSSJ9.HZyjh4g3TAAO
 const MAP_STYLE = "mapbox://styles/daltonwb/cmppy5827006g01qn8ri0chn3";
 const ROUTE_DRAW_MS = 4000;
 const ROUTE_FIT_MS = 1700;
-const MAP_MAX_BOUNDS = [
-  [-18, -18],
-  [150, 72]
-];
-
 const routes = {
   "baltic-india": {
     label: "Baltic Sea to India route",
-    color: "#f2c15f",
+    color: "#bf9775",
     features: [
       {
         type: "Feature",
@@ -57,7 +52,7 @@ const routes = {
   },
   "gulf-east-asia": {
     label: "Gulf to East Asia route",
-    color: "#7cc7d9",
+    color: "#8dc8c1",
     features: [
       {
         type: "Feature",
@@ -72,11 +67,15 @@ const routes = {
             [56.55, 26.35],
             [63.5, 22.6],
             [71.0, 9.0],
-            [82.5, 5.8],
-            [95.7, 5.4],
-            [99.4, 3.8],
+            [78.2, 5.8],
+            [82.8, 4.4],
+            [90.0, 5.2],
+            [96.2, 6.0],
+            [100.0, 4.5],
             [103.8, 1.3],
-            [112.0, 8.5],
+            [106.2, 2.6],
+            [110.4, 5.0],
+            [114.8, 9.0],
             [121.0, 20.5]
           ]
         }
@@ -126,7 +125,7 @@ const routes = {
 };
 
 const routeIds = Object.keys(routes);
-let activeRoute = "baltic-india";
+let activeRoute = null;
 let animationFrame = null;
 
 const map = new mapboxgl.Map({
@@ -135,18 +134,17 @@ const map = new mapboxgl.Map({
   projection: {
     name: "equalEarth"
   },
-  center: [84.961294, 20.770614],
-  zoom: 2.15,
+  center: [20, 10],
+  zoom: 0.95,
   bearing: 0,
   pitch: 12,
-  maxBounds: MAP_MAX_BOUNDS,
   renderWorldCopies: false,
   attributionControl: false,
   cooperativeGestures: true
 });
 
+map.addControl(new mapboxgl.AttributionControl({ compact: false }), "bottom-right");
 map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }), "bottom-right");
-map.addControl(new mapboxgl.AttributionControl({ compact: false }), "bottom-left");
 
 const buttons = Array.from(document.querySelectorAll("[data-map-state]"));
 const status = document.getElementById("map-status");
@@ -196,6 +194,33 @@ function getRouteBounds(routeId) {
     bounds.extend(coordinate);
     return bounds;
   }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+}
+
+function getAllRouteBounds() {
+  const coordinates = getAllRouteFeatures().flatMap((feature) => feature.geometry.coordinates);
+  if (!coordinates.length) return null;
+
+  return coordinates.slice(1).reduce((bounds, coordinate) => {
+    bounds.extend(coordinate);
+    return bounds;
+  }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+}
+
+function fitInitialView() {
+  const bounds = getAllRouteBounds();
+  if (!bounds) return;
+
+  map.fitBounds(bounds, {
+    padding: {
+      top: 72,
+      right: 40,
+      bottom: 40,
+      left: 40
+    },
+    bearing: 0,
+    pitch: 12,
+    duration: 0
+  });
 }
 
 function toRadians(value) {
@@ -299,7 +324,7 @@ function addRouteLayers() {
 
   map.addSource("active-route", {
     type: "geojson",
-    data: getPartialRoute(activeRoute, 1)
+    data: featureCollection()
   });
 
   map.addSource("route-points", {
@@ -311,6 +336,10 @@ function addRouteLayers() {
     id: "routes-muted",
     type: "line",
     source: "shipping-routes",
+    layout: {
+      "line-cap": "round",
+      "line-join": "round"
+    },
     paint: {
       "line-color": routeColorExpression(),
       "line-opacity": [
@@ -333,15 +362,19 @@ function addRouteLayers() {
     id: "active-route-casing",
     type: "line",
     source: "active-route",
+    layout: {
+      "line-cap": "round",
+      "line-join": "round"
+    },
     paint: {
-      "line-color": "#142326",
+      "line-color": routeColorExpression(),
       "line-opacity": 0.86,
       "line-width": [
         "interpolate",
         ["linear"],
         ["zoom"],
-        2, 6,
-        6, 10
+        2, 10,
+        6, 14
       ]
     }
   });
@@ -350,8 +383,12 @@ function addRouteLayers() {
     id: "active-route",
     type: "line",
     source: "active-route",
+    layout: {
+      "line-cap": "round",
+      "line-join": "round"
+    },
     paint: {
-      "line-color": routeColorExpression(),
+      "line-color": "#ffffff",
       "line-opacity": 0.96,
       "line-width": [
         "interpolate",
@@ -386,23 +423,23 @@ function addRouteLayers() {
     type: "symbol",
     source: "route-points",
     layout: {
-      "text-field": ["get", "name"],
+      "text-field": ["upcase", ["get", "name"]],
       "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
       "text-size": [
         "interpolate",
         ["linear"],
         ["zoom"],
-        2, 10,
-        5, 13
+        2, 14,
+        5, 18
       ],
       "text-anchor": "top",
       "text-offset": [0, 0.8],
       "text-allow-overlap": false
     },
     paint: {
-      "text-color": "#f6eee6",
-      "text-halo-color": "#142326",
-      "text-halo-width": 1.2,
+      "text-color": "#000000",
+      "text-halo-color": "#ffffff",
+      "text-halo-width": 0.8,
       "text-opacity": [
         "case",
         ["==", ["get", "route"], activeRoute],
@@ -495,5 +532,4 @@ buttons.forEach((button) => {
 
 map.on("load", () => {
   addRouteLayers();
-  setActiveState(activeRoute);
 });
