@@ -9,7 +9,7 @@
   --media-block-space-top: 3rem;
   --media-block-space-bottom: 3rem;
   --media-block-space-inline: 1.5rem;
-  --media-block-caption-gap: 1.5rem;
+  --media-block-caption-gap: 0.5rem;
 }
 
 *,

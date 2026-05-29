@@ -90,7 +90,6 @@
 
     function cleanup() {
       if (swap.__swapToken !== swapToken) return;
-      bufferImage.classList.remove("is-visible");
       if (swap.__bufferLoadHandler === handleLoad) {
         bufferImage.removeEventListener("load", handleLoad);
         bufferImage.removeEventListener("error", handleLoad);
@@ -98,7 +97,19 @@
       }
       activeImage.setAttribute("src", nextSrc);
       bufferImage.setAttribute("src", nextSrc);
-      swap.__swapCleanupTimer = undefined;
+
+      function hideBuffer() {
+        if (swap.__swapToken !== swapToken) return;
+        bufferImage.classList.remove("is-visible");
+        swap.__swapCleanupTimer = undefined;
+      }
+
+      if (typeof activeImage.decode === "function") {
+        activeImage.decode().then(hideBuffer, hideBuffer);
+        return;
+      }
+
+      requestAnimationFrame(hideBuffer);
     }
 
     function handleLoad() {
