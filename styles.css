@@ -398,6 +398,14 @@ figure {
   height: 165vh;
 }
 
+.chapter-copy--scroll-swap-contained .scroll-swap__track--five {
+  height: 225vh;
+}
+
+.chapter-copy--scroll-swap-tss .scroll-swap__track--five {
+  height: 340vh;
+}
+
 .chapter-copy--scroll-swap-fast {
   --scroll-swap-transition-duration: 180ms;
 }
@@ -505,6 +513,10 @@ figure {
   --scroll-swap-image-offset-y: -5%;
 }
 
+.wide-media--scroll-swap-tss {
+  --scroll-swap-image-offset-y: -6%;
+}
+
 .scroll-swap__stage {
   position: sticky;
   top: 0;
@@ -527,6 +539,10 @@ figure {
 
 .scroll-swap__track--four {
   height: 230vh;
+}
+
+.scroll-swap__track--five {
+  height: 290vh;
 }
 
 .scroll-swap__image {
@@ -596,6 +612,10 @@ figure {
 
   .scroll-swap__track--four {
     height: 200vh;
+  }
+
+  .scroll-swap__track--five {
+    height: 250vh;
   }
 }
 
