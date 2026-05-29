@@ -2,7 +2,7 @@
   const swaps = Array.from(document.querySelectorAll("[data-scroll-swap]"));
   if (!swaps.length) return;
 
-  const FADE_DURATION_MS = 360;
+  const DEFAULT_FADE_DURATION_MS = 360;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const preloadCache = new Set();
 
@@ -23,6 +23,16 @@
     const preloader = new Image();
     preloader.src = src;
     preloadCache.add(src);
+  }
+
+  function getFadeDuration(swap) {
+    const requestedDuration = Number.parseInt(swap.dataset.swapFadeMs, 10);
+
+    if (Number.isFinite(requestedDuration) && requestedDuration >= 0) {
+      return requestedDuration;
+    }
+
+    return DEFAULT_FADE_DURATION_MS;
   }
 
   function getSwapSources(image) {
@@ -97,7 +107,7 @@
         if (swap.__swapToken !== swapToken) return;
         bufferImage.classList.add("is-visible");
       });
-      swap.__swapCleanupTimer = window.setTimeout(cleanup, FADE_DURATION_MS);
+      swap.__swapCleanupTimer = window.setTimeout(cleanup, getFadeDuration(swap));
     }
 
     bufferImage.classList.remove("is-visible");

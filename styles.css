@@ -318,6 +318,10 @@ figure {
   margin: var(--media-block-top) 0 var(--media-block-bottom);
 }
 
+.media-block--flush-bottom {
+  --media-block-bottom: 0;
+}
+
 .chapter-copy > .media-breakout.media-block > img {
   display: block;
   width: 100%;
@@ -392,6 +396,10 @@ figure {
 
 .chapter-copy--scroll-swap-contained .scroll-swap__track--four {
   height: 165vh;
+}
+
+.chapter-copy--scroll-swap-fast {
+  --scroll-swap-transition-duration: 180ms;
 }
 
 .scroll-swap__copy {
@@ -524,7 +532,7 @@ figure {
   height: 100%;
   object-fit: contain;
   opacity: 0;
-  transition: opacity 360ms ease;
+  transition: opacity var(--scroll-swap-transition-duration, 360ms) ease;
   will-change: opacity;
 }
 
