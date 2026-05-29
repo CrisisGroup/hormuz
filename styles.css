@@ -489,6 +489,10 @@ figure {
   --scroll-swap-aspect-ratio: 2 / 1;
 }
 
+.wide-media--scroll-swap-grains {
+  --scroll-swap-aspect-ratio: 1080 / 850;
+}
+
 .scroll-swap__stage {
   position: sticky;
   top: 0;
