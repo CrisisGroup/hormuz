@@ -3,7 +3,8 @@
   if (!swaps.length) return;
 
   const DEFAULT_FADE_DURATION_MS = 360;
-  const DEFAULT_FINAL_HOLD_RATIO = 0.25;
+  const DEFAULT_FINAL_HOLD_RATIO = 0.45;
+  const DEFAULT_TRIGGER_LINE_RATIO = 0.88;
   const MIN_FINAL_HOLD_SOURCE_COUNT = 3;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const preloadCache = new Set();
@@ -18,6 +19,28 @@
 
   function getSwapTrack(swap) {
     return swap.querySelector(".scroll-swap__track");
+  }
+
+  function getSwapStage(swap) {
+    return swap.querySelector(".scroll-swap__stage");
+  }
+
+  function getPixelValue(value) {
+    const parsedValue = Number.parseFloat(value);
+    return Number.isFinite(parsedValue) ? parsedValue : 0;
+  }
+
+  function getProgressTrackTop(swap, trackRect) {
+    const stage = getSwapStage(swap);
+    if (!stage) return trackRect.top;
+
+    const swapRect = swap.getBoundingClientRect();
+    const stickyOffset = getPixelValue(window.getComputedStyle(stage).top);
+    const viewportStageHeight = Math.max(window.innerHeight - stickyOffset, 1);
+
+    // Long mobile copy can make the stage taller than the viewport. Start progress
+    // from the visible sticky area instead of waiting for the full stage to pass.
+    return Math.min(trackRect.top, swapRect.top + viewportStageHeight);
   }
 
   function preloadSource(src) {
@@ -45,6 +68,15 @@
     }
 
     return sources.length >= MIN_FINAL_HOLD_SOURCE_COUNT ? DEFAULT_FINAL_HOLD_RATIO : 0;
+  }
+
+  function getTriggerLine(swap) {
+    const requestedTrigger = Number.parseFloat(swap.dataset.swapTrigger);
+    const triggerRatio = Number.isFinite(requestedTrigger)
+      ? Math.min(Math.max(requestedTrigger, 0.1), 0.95)
+      : DEFAULT_TRIGGER_LINE_RATIO;
+
+    return window.innerHeight * triggerRatio;
   }
 
   function getSwapSources(image) {
@@ -160,8 +192,6 @@
   let ticking = false;
 
   function updateSwaps() {
-    const triggerLine = window.innerHeight * 0.78;
-
     swaps.forEach((swap) => {
       const track = getSwapTrack(swap);
       if (!track) return;
@@ -174,12 +204,14 @@
 
       const trackRect = track.getBoundingClientRect();
       const trackHeight = Math.max(trackRect.height, 1);
-      const trackProgress = Math.min(Math.max((triggerLine - trackRect.top) / trackHeight, 0), 0.999);
+      const progressTrackTop = getProgressTrackTop(swap, trackRect);
+      const triggerLine = getTriggerLine(swap);
+      const trackProgress = Math.min(Math.max((triggerLine - progressTrackTop) / trackHeight, 0), 0.999);
       const finalHoldRatio = getFinalHoldRatio(swap, sources);
       const transitionProgress = finalHoldRatio > 0
         ? Math.min(trackProgress / (1 - finalHoldRatio), 0.999)
         : trackProgress;
-      const nextIndex = trackRect.top <= triggerLine
+      const nextIndex = progressTrackTop <= triggerLine
         ? Math.min(Math.floor(transitionProgress * (sources.length - 1)) + 1, sources.length - 1)
         : 0;
 

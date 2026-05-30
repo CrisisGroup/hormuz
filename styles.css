@@ -278,9 +278,9 @@ figure {
   margin-top: 2.25rem;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 700px) {
   .hero__intro {
-    padding: 0 1.5rem;
+    padding: 0 var(--chapter-copy-space-inline);
   }
 }
 
@@ -381,12 +381,16 @@ figure {
   max-width: 100%;
 }
 
+.chapter-copy--scroll-swap-contained {
+  --scroll-swap-lock-offset: 4vh;
+}
+
 .chapter-copy--scroll-swap-contained .scroll-swap__stage {
   position: sticky;
-  top: var(--scroll-swap-lock-offset, 4vh);
+  top: var(--scroll-swap-lock-offset);
   --scroll-swap-copy-gap: 1rem;
   --scroll-swap-copy-heading-gap: 0.75rem;
-  min-height: calc(100vh - var(--scroll-swap-lock-offset, 4vh));
+  min-height: calc(100vh - var(--scroll-swap-lock-offset));
   flex-direction: column;
   gap: 0;
   padding-block: 1rem;
@@ -612,19 +616,23 @@ figure {
     padding: 1rem var(--media-block-inline, 1rem);
   }
 
-  .scroll-swap__track {
+  .chapter-copy--scroll-swap-contained .scroll-swap__track {
     height: 100vh;
   }
 
-  .scroll-swap__track--three {
+  .chapter-copy--scroll-swap-contained .scroll-swap__track--three {
     height: 150vh;
   }
 
-  .scroll-swap__track--four {
+  .chapter-copy--scroll-swap-contained .scroll-swap__track--four {
     height: 200vh;
   }
 
-  .scroll-swap__track--five {
+  .chapter-copy--scroll-swap-contained .scroll-swap__track--five {
+    height: 250vh;
+  }
+
+  .chapter-copy--scroll-swap-tss .scroll-swap__track--five {
     height: 250vh;
   }
 }
